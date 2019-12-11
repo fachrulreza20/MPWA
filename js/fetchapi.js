@@ -3,7 +3,7 @@ const BASE_URL = "https://api.football-data.org/v2/";
 
 //var LEAGUE_ID = ""; // default
 
-
+var teamsRow =  document.getElementById("teamsRow");
 
 const fetchAPI = url => {
     return fetch(url, {
@@ -111,7 +111,7 @@ function showStanding(data) {
         };
 
         dbInsertTeam(favTeam).then(() => {
-            showAllTeam()
+            showAllTeam();
         })
 
 }
@@ -122,10 +122,10 @@ function showStanding(data) {
 
     function showAllTeam() {
 
-    let teamsRow =  document.getElementById("teamsRow");
+  
 
        dbGetAllTeam().then(teams => {
-           let listTeamsInText = "";
+           var listTeamsInText = "";
            teams.forEach(team => {
                listTeamsInText += `
                <tr>
@@ -135,6 +135,7 @@ function showStanding(data) {
                </tr>
                `;
            });
+           console.log(listTeamsInText);
            teamsRow.innerHTML = listTeamsInText;
 
            let removeButtons = document.querySelectorAll(".removeButton");
@@ -142,14 +143,12 @@ function showStanding(data) {
                button.addEventListener("click", function (event) {
                    let teamId = event.target.id;
                    dbDeleteTeam(teamId).then(() => {
-                       showAllTeam()
+                       showAllTeam();
                    })
                })
            }
        })
     }
-
-    showAllTeam();
 
 
 

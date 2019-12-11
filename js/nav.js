@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
     var page = window.location.hash.substr(1);
-    var league_id = 0;
+    var league_id = 2021;
 
     if (page == "") page = "home";
     loadPage(page);
@@ -67,7 +67,12 @@ document.addEventListener("DOMContentLoaded", function() {
           var content = document.querySelector("#body-content");
           if (this.status == 200) {
             content.innerHTML = xhttp.responseText;
-            cachesData(league_id);  // panggil cachesData di fetchapi.js dengan parameter league id agar tampil klasemen/standing sesuai league id
+
+
+            if(page != "home"){
+              cachesData(league_id);  // panggil cachesData di fetchapi.js dengan parameter league id agar tampil klasemen/standing sesuai league id              
+            }
+
           } else if (this.status == 404) {
             content.innerHTML = "<p>Halaman tidak ditemukan.</p>";
           } else {
