@@ -54,7 +54,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
     var page = window.location.hash.substr(1);
-    var league_id = 2021;
 
     if (page == "") page = "home";
     loadPage(page);

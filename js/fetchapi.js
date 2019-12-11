@@ -3,7 +3,6 @@ const BASE_URL = "https://api.football-data.org/v2/";
 
 //var LEAGUE_ID = ""; // default
 
-var teamsRow =  document.getElementById("teamsRow");
 
 const fetchAPI = url => {
     return fetch(url, {
@@ -123,6 +122,7 @@ function showStanding(data) {
     function showAllTeam() {
 
   
+        var teamsRow =  document.getElementById("teamsRow");
 
        dbGetAllTeam().then(teams => {
            var listTeamsInText = "";
