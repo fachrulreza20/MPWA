@@ -68,8 +68,13 @@ document.addEventListener("DOMContentLoaded", function() {
             content.innerHTML = xhttp.responseText;
 
 
-            if(page != "home"){
+            if(page != "home" && page != "favteam"){
               cachesData(league_id);  // panggil cachesData di fetchapi.js dengan parameter league id agar tampil klasemen/standing sesuai league id              
+            }
+
+
+            if(page == "favteam"){
+              showAllTeam();
             }
 
           } else if (this.status == 404) {

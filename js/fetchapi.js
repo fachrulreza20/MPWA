@@ -32,8 +32,9 @@ function cachesData(LEAGUE_ID) { // ambil data dari caches jika dalam keadaan of
         caches.match(URL_ENDPOINT).then(function (response) {
             if (response) {
                 response.json().then(function (data) {
-                    console.log("data:"+data);
+                    //console.log("data:"+data);
                     showStanding(data);
+                    //showAllTeam();
                 })
             }
         })
@@ -52,7 +53,7 @@ function showStanding(data) {
     let standings = "";
     let standingElement =  document.getElementById("klasemen");
 
-    console.log(data);
+  //  console.log(data);
 
     var x = 0;
     data.standings[0].table.forEach(function (standing) {
@@ -60,9 +61,11 @@ function showStanding(data) {
         // var teamName = data.standings[0].table[x].team.name;
         // var teamId = data.standings[0].table[x].team.id;
 
+
+
         standings += `
                 <tr>
-                    <td><a onclick='insertFavoriteTeam("${standing.team.name}","${standing.team.id}")'><i class="material-icons" style="cursor:pointer">favorite_border</i></a></td>
+                    <td><a onclick='insertFavoriteTeam("${standing.team.name}","${standing.team.id}","${standing.team.crestUrl}")'><i class="material-icons" style="cursor:pointer">favorite_border</i></a></td>
                     <td><img src="${standing.team.crestUrl.replace(/^http:\/\//i, 'https://')}" width="30px" alt="badge"/></td>
                     <td><b>${standing.team.name}<b></td>
                     <td>${standing.won}</td>
@@ -102,15 +105,17 @@ function showStanding(data) {
 }
 
 
-  function insertFavoriteTeam(teamName, teamId) {
+  function insertFavoriteTeam(teamName, teamId, teamCrest) {
 
         const favTeam = {
             teamId: teamId,
             teamName: teamName,
+            teamCrest: teamCrest,
         };
 
         dbInsertTeam(favTeam).then(() => {
             showAllTeam();
+            alert(teamName + "Added to Favorites");
         })
 
 }
@@ -124,19 +129,21 @@ function showStanding(data) {
   
         var teamsRow =  document.getElementById("teamsRow");
 
-       dbGetAllTeam().then(teams => {
+        dbGetAllTeam().then(teams => {
            var listTeamsInText = "";
            teams.forEach(team => {
                listTeamsInText += `
                <tr>
-                 <td>${team.teamId}</td>
+                 <td><img src="${team.teamCrest.replace(/^http:\/\//i, 'https://')}" width="30px" alt="badge"/></td>
                  <td>${team.teamName}</td>
                  <td><button id="${team.teamId}" class="removeButton">Remove</button></td>
                </tr>
                `;
            });
-           console.log(listTeamsInText);
-           teamsRow.innerHTML = listTeamsInText;
+          //console.log(listTeamsInText);
+          if(listTeamsInText != null){
+           teamsRow.innerHTML = listTeamsInText;            
+          }
 
            let removeButtons = document.querySelectorAll(".removeButton");
            for(let button of removeButtons) {
